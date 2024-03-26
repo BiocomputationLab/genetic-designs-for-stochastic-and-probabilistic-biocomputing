@@ -1,5 +1,5 @@
 !Genetic designs for stochastic and probabilistic biocomputing
-!Lewis Grozinger,Jesús Miró-Bueno,Ángel Goñi-Moreno
+!Lewis Grozinger,JesÃºs MirÃ³-Bueno,Ãngel GoÃ±i-Moreno
 
 program pbits_NOT_gate
    implicit none
@@ -23,7 +23,6 @@ program pbits_NOT_gate
    v=1.d0
    allocate(a(1:m),h(1:m),c(1:m),y(1:n))
 
-
 !GENE1
    time_0_1=0.d0
    time_1_1=0.d0
@@ -36,15 +35,6 @@ program pbits_NOT_gate
    p0_2=.false.
    p1_2=.true.
 
-!GENE1
-   time_0_TF2_1=0.d0
-   time_1_TF2_1=0.d0
-
-!GENE2
-   time_0_TF2_2=0.d0
-   time_1_TF2_2=0.d0
-
-!both genes
    time00=0.d0
    time01=0.d0
    time10=0.d0
@@ -53,7 +43,6 @@ program pbits_NOT_gate
    write(1,*)'time',',','P_1',',','Pa_1',',','Pr_1',',','Pra_1',',','M_1',',','TF_1',',','TF2_1'
    write(2,*)'time',',','P_2',',','Pa_2',',','Pr_2',',','Pra_2',',','M_2',',','TF_2',',','TF2_2'
    write(3,*)'time',',','00',',','01',',','10',',','11'
-
 
    a0=0.d0
    t=0.d0
@@ -85,7 +74,6 @@ program pbits_NOT_gate
    c(14)=1.d0/v*0.1   !reaction 14: TF_1+TF_1--> TF2_1
    c(15)=1.d0   !reaction 15: TF2_1 -->TF_1+TF_1
 
-
    if (p0_1.eqv..true.) then
       c(1)=0.01d0   !reaction 1: P_1-->Pr_1
       c(3)=0.01d0   !reaction 3: Pa_1-->Pra_1
@@ -111,13 +99,12 @@ program pbits_NOT_gate
    c(29)=1.d0/v*0.1   !reaction 29: TF_2+TF_2--> TF2_2
    c(30)=1.d0   !reaction 30: TF2_2 -->TF_2+TF_2
 
-
    if (p0_2.eqv..true.) then
-      c(16)=0.01d0   !reaction 16: P_2-->Pr_2
-      c(18)=0.01d0   !reaction 18: Pa_2-->Pra_2
+      c(16)=0.01d0
+      c(18)=0.01d0
    else if (p1_2.eqv..true.) then
-      c(16)=10.d0   !reaction 16: P_2-->Pr_2
-      c(18)=10.d0   !reaction 18: Pa_2-->Pra_2
+      c(16)=10.d0
+      c(18)=10.d0
    end if
 
    y(1)=1   !P_1
@@ -141,7 +128,6 @@ program pbits_NOT_gate
       if (t>=aux_write) then 
          write(1,*)t,',',y(1),',',y(2),',',y(3),',',y(4),',',y(5),',',y(6),',',y(7)
          write(2,*)t,',',y(8),',',y(9),',',y(10),',',y(11),',',y(12),',',y(13),',',y(14)
-         
          aux_write=t+incremento_t
       end if
 
@@ -216,92 +202,92 @@ program pbits_NOT_gate
 
       t=t+tau
 
-      if (mu==1) then !reaction 1: P_1-->Pr_1
+      if (mu==1) then !reaction 1
          y(1)=y(1)-1
          y(3)=y(3)+1
-      else if (mu==2) then !reaction 2: Pr_1-->P_1
+      else if (mu==2) then !reaction 2
          y(1)=y(1)+1
          y(3)=y(3)-1
-      else if (mu==3) then !reaction 3: Pa_1-->Pra_1
+      else if (mu==3) then !reaction 3
          y(2)=y(2)-1
          y(4)=y(4)+1
-      else if (mu==4) then !reaction 4: Par_1-->Pa_1
+      else if (mu==4) then !reaction 4
          y(2)=y(2)+1
          y(4)=y(4)-1
-      else if (mu==5) then !reaction 5: TF2_2+P_1-->Pa_1
+      else if (mu==5) then !reaction 5
          y(1)=y(1)-1
          y(14)=y(14)-1
          y(2)=y(2)+1
-      else if (mu==6) then !reaction 6: Pa_1-->TF2_2+P_1
+      else if (mu==6) then !reaction 6
          y(1)=y(1)+1
          y(14)=y(14)+1
          y(2)=y(2)-1
-      else if (mu==7) then !reaction 7: TF2_2+Pr_1-->Pra_1
+      else if (mu==7) then !reaction 7
          y(3)=y(3)-1
          y(14)=y(14)-1
          y(4)=y(4)+1
-      else if (mu==8) then !reaction 8: Pra_1-->TF2_2+Pr_1
+      else if (mu==8) then !reaction 8
          y(3)=y(3)+1
          y(14)=y(14)+1
          y(4)=y(4)-1
-      else if (mu==9) then !reaction 9: Pr_1-->Pr_1+M_1
+      else if (mu==9) then !reaction 9
          y(5)=y(5)+1
-      else if (mu==10) then !reaction 10: Pra_1-->Pra_1+M_1
+      else if (mu==10) then !reaction 10
          y(5)=y(5)+1
-      else if (mu==11) then !reaction 11: M_1-->...
+      else if (mu==11) then !reaction 11
          y(5)=y(5)-1
-      else if (mu==12) then !reaction 12: M_1-->M_1+TF_1
+      else if (mu==12) then !reaction 12
          y(6)=y(6)+1
-      else if (mu==13) then !reaction 13: TF_1-->...
+      else if (mu==13) then !reaction 13
          y(6)=y(6)-1
-      else if (mu==14) then !reaction 14: TF_1+TF_1--> TF2_1
+      else if (mu==14) then !reaction 14
          y(6)=y(6)-2
          y(7)=y(7)+1
-      else if (mu==15) then !reaction 15: TF2_1 -->TF_1+TF_1
+      else if (mu==15) then !reaction 15
          y(6)=y(6)+2
          y(7)=y(7)-1
-      else if (mu==16) then !reaction 16: P_2-->Pr_2
+      else if (mu==16) then !reaction 16
          y(8)=y(8)-1
          y(10)=y(10)+1
-      else if (mu==17) then !reaction 17: Pr_2-->P_2
+      else if (mu==17) then !reaction 17
          y(8)=y(8)+1
          y(10)=y(10)-1
-      else if (mu==18) then !reaction 18: Pa_2-->Pra_2
+      else if (mu==18) then !reaction 18
          y(9)=y(9)-1
          y(11)=y(11)+1
-      else if (mu==19) then !reaction 19: Pra_2-->Pa_2
+      else if (mu==19) then !reaction 19
          y(9)=y(9)+1
          y(11)=y(11)-1
-      else if (mu==20) then !reaction 20: TF2_1+P_2-->Pa
+      else if (mu==20) then !reaction 20
          y(8)=y(8)-1
          y(7)=y(7)-1
          y(9)=y(9)+1
-      else if (mu==21) then !reaction 21: Pa_2-->TF2_1+P_2
+      else if (mu==21) then !reaction 21
          y(8)=y(8)+1
          y(7)=y(7)+1
          y(9)=y(9)-1
-      else if (mu==22) then !reaction 22: TF2_1+Pr_2-->Pra_2
+      else if (mu==22) then !reaction 22
          y(10)=y(10)-1
          y(7)=y(7)-1
          y(11)=y(11)+1
-      else if (mu==23) then !reaction 23: Pra_2-->TF2_1+Pr_2
+      else if (mu==23) then !reaction 23
          y(10)=y(10)+1
          y(7)=y(7)+1
          y(11)=y(11)-1
-      else if (mu==24) then !reaction 24: Pr_2-->Pr_2+M_2
+      else if (mu==24) then !reaction 24
          y(12)=y(12)+1
-      else if (mu==25) then !reaction 25: Pra_2-->Pra_2+M_2
+      else if (mu==25) then !reaction 25
          y(12)=y(12)+1
-      else if (mu==26) then !reaction 26: M_2-->...
+      else if (mu==26) then !reaction 26
          y(12)=y(12)-1
-      else if (mu==27) then !reaction 27: M_2-->M_2+TF_2
+      else if (mu==27) then !reaction 27
          y(13)=y(13)+1
-      else if (mu==28) then !reaction 28: TF_2-->...
+      else if (mu==28) then !reaction 28
          y(13)=y(13)-1
-      else if (mu==29) then !reaction 29: TF_2+TF_2--> TF2_2
+      else if (mu==29) then !reaction 29
          y(13)=y(13)-2
          y(14)=y(14)+1
-      else if (mu==30) then !reaction 30: TF2_2 -->TF_2+TF_2
+      else if (mu==30) then !reaction 30
          y(13)=y(13)+2
          y(14)=y(14)-1
       end if
@@ -311,4 +297,3 @@ program pbits_NOT_gate
    write(3,*)t,',',time00,',',time01,',',time10,',',time11
 
 end program
-
