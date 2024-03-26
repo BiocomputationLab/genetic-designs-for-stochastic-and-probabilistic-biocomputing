@@ -1,5 +1,5 @@
 !Genetic designs for stochastic and probabilistic biocomputing
-!Lewis Grozinger,Jesús Miró-Bueno,Ángel Goñi-Moreno
+!Lewis Grozinger,JesÃºs MirÃ³-Bueno,Ãngel GoÃ±i-Moreno
 
 program pbits_AND_gate
    implicit none
@@ -24,7 +24,6 @@ program pbits_AND_gate
    v=1.d0
    allocate(a(1:m),h(1:m),c(1:m),y(1:n))
 
-
 !GENE1
    time_0_1=0.d0
    time_1_1=0.d0
@@ -43,19 +42,6 @@ program pbits_AND_gate
    p0_3=.false.
    p1_3=.false.
 
-!GENE1
-   time_0_TF2_1=0.d0
-   time_1_TF2_1=0.d0
-
-!GENE2
-   time_0_TF2_2=0.d0
-   time_1_TF2_2=0.d0
-
-!GENE3
-   time_0_TF2_3=0.d0
-   time_1_TF2_3=0.d0
-
-!three genes
    time000=0.d0
    time001=0.d0
    time010=0.d0
@@ -66,14 +52,13 @@ program pbits_AND_gate
    time111=0.d0
 
 
-write(1,*)'time',',','P_1',',','Pa2_1',',','Pa3_1',',','Pa23_1',',','Pr_1',',','Pra2_1',',','Pra3_1',',','Pra23_1',',','M_1',','&
+   write(1,*)'time',',','P_1',',','Pa2_1',',','Pa3_1',',','Pa23_1',',','Pr_1',',','Pra2_1',',','Pra3_1',',','Pra23_1',',','M_1',','&
    ,'TF_1',',','TF2_1'
    write(2,*)'time',',','P_2',',','Pa2_2',',','Pa3_2',',','Pa23_2',',','Pr_2',',','Pra2_2',',','Pra3_2',',','Pra23_2',',','M_2',','&
    ,'TF_2',',','TF2_2'
    write(3,*)'time',',','P_3',',','Pa2_3',',','Pa3_3',',','Pa23_3',',','Pr_3',',','Pra2_3',',','Pra3_3',',','Pra23_3',',','M_3',','&
    ,'TF_3',',','TF2_3'
    write(4,*)'time',',','000',',','001',',','010',',','011',',','100',',','101',',','110',',','111'
-   write(5,*)'time',',','000',',','001',',','010',',','011',',','100',',','101',',','110',',','111'
 
    a0=0.d0
    t=0.d0
@@ -120,120 +105,114 @@ write(1,*)'time',',','P_1',',','Pa2_1',',','Pa3_1',',','Pa23_1',',','Pr_1',',','
    c(29)=10.d0   !reaction 29: M_1-->...k4
    c(30)=50.d0   !reaction 30: M_1-->M_1+TF_1
    c(31)=1.d0   !reaction 31: TF_1-->...
-   
-!module TF levels
    c(32)=1.d0/v*0.1   !reaction 32: TF_1+TF_1--> TF2_1
    c(33)=1.d0   !reaction 33: TF2_1 -->TF_1+TF_1
 
-
    if (p0_1.eqv..true.) then
-      c(1)=0.01d0   !reaction 1: P_1-->Pr_1
-      c(3)=c(1)   !reaction 3: Pa2_1-->Pra2_1
-      c(5)=c(1)   !reaction 5: Pa3_1-->Pra3_1
-      c(7)=c(1)   !reaction 7: Pa23_1-->Pra23_1
+      c(1)=0.01d0
+      c(3)=c(1)
+      c(5)=c(1)
+      c(7)=c(1)
    else if (p1_1.eqv..true.) then
-      c(1)=10.d0   !reaction 1: P_1-->Pr_1
-      c(3)=c(1)   !reaction 3: Pa2_1-->Pra2_1
-      c(5)=c(1)   !reaction 5: Pa3_1-->Pra3_1
-      c(7)=c(1)   !reaction 7: Pa23_1-->Pra23_1
+      c(1)=10.d0
+      c(3)=c(1)
+      c(5)=c(1)
+      c(7)=c(1)
    end if
 
-
 !GENE 2
-   c(1+33)=10.d0   !reaction 1+33: P_2-->Pr_2 
-   c(2+33)=c(2)   !reaction 2+33: Pr_2-->P_2
-   c(3+33)=0.01d0   !reaction 3+33: Pa1_2-->Pra1_2 
-   c(4+33)=c(2)   !reaction 4+33: Pra1_2-->Pa1_2
-   c(5+33)=10.d0   !reaction 5+33: Pa3_2-->Pra3_2 
-   c(6+33)=c(2)   !reaction 6+33: Pra3_2-->Pa3_2
-   c(7+33)=10.d0   !reaction 7+33: Pa13_2-->Pra13_2 
-   c(8+33)=c(2)   !reaction 8+33: Pra13_2-->Pa13_2
-   c(9+33)=1.0d0/v   !reaction 9: TF2_1+P_2-->Pa1_2
-   c(10+33)=1.d0   !reaction 10: Pa1_2-->TF2_1+P_2
-   c(11+33)=c(9)   !reaction11: TF2_1+Pr_2-->Pra1_2
-   c(12+33)=c(10)   !reaction 12: Pra1_2-->TF2_1+Pr_2
-   c(13+33)=1.0d0/v   !reaction 13: TF2_3+P_2-->Pa3_2
-   c(14+33)=1.d0   !reaction 14: Pa3_2-->TF2_3+P_2
-   c(15+33)=c(9)   !reaction 15: TF2_3+Pr_2-->Pra3_2
-   c(16+33)=c(10)   !reaction 16: Pra1_2-->TF2_3+Pr_2
-   c(17+33)=1.0d0/v   !reaction 17: TF2_1+Pa3_2-->Pa13_2
-   c(18+33)=1.d0   !reaction 18: Pa13_2-->TF2_1+Pa3_2
-   c(19+33)=c(9)   !reaction 19: TF2_1+Pra3_2-->Pra13_2
-   c(20+33)=c(10)   !reaction 20: Pra13_2-->TF2_1+Pra3_2
-   c(21+33)=1.0d0/v   !reaction 21: TF2_3+Pa1_2-->Pa13_2
-   c(22+33)=1.d0   !reaction 22: Pa13_2-->TF2_3+Pa1_2
-   c(23+33)=c(9)   !reaction 23: TF2_3+Pra1_2-->Pra13_2
-   c(24+33)=c(10)   !reaction 24: Pra13_2-->TF2_3+Pra1_2
-   c(25+33)=10.d0   !reaction 25: Pr_2-->Pr_2+M_2
-   c(26+33)=c(25)   !reaction 26: Pra1_2-->Pra1_2+M_2
-   c(27+33)=c(25)   !reaction 27: Pra3_2-->Pra3_2+M_2
-   c(28+33)=c(25)   !reaction 27: Pra13_2-->Pra13_2+M_2
-   c(29+33)=10.d0   !reaction 11: M_2-->...k4
-   c(30+33)=50.d0   !reaction 12: M_2-->M_2+TF_2
-   c(31+33)=1.d0   !reaction 13: TF_2-->...
-   c(32+33)=1.d0/v*0.1   !reaction 14: TF_2+TF_2--> TF2_2
-   c(33+33)=1.d0   !reaction 15: TF2_2 -->TF_2+TF_2
+   c(34)=10.d0   !reaction 34: P_2-->Pr_2 
+   c(35)=c(2)   !reaction 35: Pr_2-->P_2
+   c(36)=0.01d0   !reaction 36: Pa1_2-->Pra1_2 
+   c(37)=c(2)   !reaction 37: Pra1_2-->Pa1_2
+   c(38)=10.d0   !reaction 38: Pa3_2-->Pra3_2 
+   c(39)=c(2)   !reaction 39: Pra3_2-->Pa3_2
+   c(40)=10.d0   !reaction 40: Pa13_2-->Pra13_2 
+   c(41)=c(2)   !reaction 41: Pra13_2-->Pa13_2
+   c(42)=1.0d0/v   !reaction 42: TF2_1+P_2-->Pa1_2
+   c(43)=1.d0   !reaction 43: Pa1_2-->TF2_1+P_2
+   c(44)=c(9)   !reaction 44: TF2_1+Pr_2-->Pra1_2
+   c(45)=c(10)   !reaction 45: Pra1_2-->TF2_1+Pr_2
+   c(46)=1.0d0/v   !reaction 46: TF2_3+P_2-->Pa3_2
+   c(47)=1.d0   !reaction 47: Pa3_2-->TF2_3+P_2
+   c(48)=c(9)   !reaction 48: TF2_3+Pr_2-->Pra3_2
+   c(49)=c(10)   !reaction 49: Pra1_2-->TF2_3+Pr_2
+   c(50)=1.0d0/v   !reaction 50: TF2_1+Pa3_2-->Pa13_2
+   c(51)=1.d0   !reaction 51: Pa13_2-->TF2_1+Pa3_2
+   c(52)=c(9)   !reaction 52: TF2_1+Pra3_2-->Pra13_2
+   c(53)=c(10)   !reaction 53: Pra13_2-->TF2_1+Pra3_2
+   c(54)=1.0d0/v   !reaction 54: TF2_3+Pa1_2-->Pa13_2
+   c(55)=1.d0   !reaction 55: Pa13_2-->TF2_3+Pa1_2
+   c(56)=c(9)   !reaction 56: TF2_3+Pra1_2-->Pra13_2
+   c(57)=c(10)   !reaction 57: Pra13_2-->TF2_3+Pra1_2
+   c(58)=10.d0   !reaction 58: Pr_2-->Pr_2+M_2
+   c(59)=c(25)   !reaction 59: Pra1_2-->Pra1_2+M_2
+   c(60)=c(25)   !reaction 60: Pra3_2-->Pra3_2+M_2
+   c(61)=c(25)   !reaction 61: Pra13_2-->Pra13_2+M_2
+   c(62)=10.d0   !reaction 62: M_2-->...k4
+   c(63)=50.d0   !reaction 63: M_2-->M_2+TF_2
+   c(64)=1.d0   !reaction 64: TF_2-->...
+   c(65)=1.d0/v*0.1   !reaction 65: TF_2+TF_2--> TF2_2
+   c(66)=1.d0   !reaction 66: TF2_2 -->TF_2+TF_2
 
    if (p0_2.eqv..true.) then
-      c(1+33)=0.01d0   !reaction 1: P_2-->Pr_2
-      c(3+33)=c(1+33)   !reaction 3: Pa1_2-->Pra1_2
-      c(5+33)=c(1+33)   !reaction 5: Pa3_2-->Pra3_2
-      c(7+33)=c(1+33)   !reaction 7: Pa13_2-->Pra13_2
+      c(34)=0.01d0
+      c(36)=c(34)
+      c(38)=c(34)
+      c(40)=c(34)
    else if (p1_2.eqv..true.) then
-      c(1+33)=10.d0   !reaction 1: P_2-->Pr_2
-      c(3+33)=c(1+33)   !reaction 3: Pa1_2-->Pra1_2
-      c(5+33)=c(1+33)   !reaction 5: Pa3_2-->Pra3_2
-      c(7+33)=c(1+33)   !reaction 7: Pa13_2-->Pra13_2
+      c(34)=10.d0
+      c(36)=c(34)
+      c(38)=c(34)
+      c(40)=c(34)
    end if
 
 !GENE 3
-   c(1+66)=0.01d0   !reaction 1: P_3-->Pr_3 
-   c(2+66)=c(2)   !reaction 2: Pr_3-->P_3
-   c(3+66)=0.01d0   !reaction 3: Pa1_3-->Pra1_3 
-   c(4+66)=c(2)   !reaction 4: Pra1_3-->Pa1_3
-   c(5+66)=0.01d0   !reaction 5: Pa2_3-->Pra2_3  
-   c(6+66)=c(2)   !reaction 6: Pra2_3-->Pa2_3
-   c(7+66)=10.d0   !reaction 7: Pa12_3-->Pra12_3 
-   c(8+66)=c(2)   !reaction 8: Pra12_3-->Pa12_3
-   c(9+66)=1.0d0/v   !reaction 9: TF2_1+P_3-->Pa1_3
-   c(10+66)=1.d0   !reaction 10: Pa1_3-->TF2_1+P_3
-   c(11+66)=c(9)   !reaction11: TF2_1+Pr_3-->Pra1_3
-   c(12+66)=c(10)   !reaction 12: Pra1_3-->TF2_1+Pr_3
-   c(13+66)=1.0d0/v   !reaction 13: TF2_2+P_3-->Pa2_3
-   c(14+66)=1.d0   !reaction 14: Pa2_3-->TF2_2+P_3
-   c(15+66)=c(9)   !reaction 15: TF2_2+Pr_3-->Pra2_3
-   c(16+66)=c(10)   !reaction 16: Pra1_3-->TF2_2+Pr_3
-   c(17+66)=1.0d0/v   !reaction 17: TF2_1+Pa2_3-->Pa12_3
-   c(18+66)=1.d0   !reaction 18: Pa12_3-->TF2_1+Pa2_3
-   c(19+66)=c(9)   !reaction 19: TF2_1+Pra2_3-->Pra12_3
-   c(20+66)=c(10)   !reaction 20: Pra12_3-->TF2_1+Pra2_3
-   c(21+66)=1.0d0/v   !reaction 21: TF2_2+Pa1_3-->Pa12_3
-   c(22+66)=1.d0   !reaction 22: Pa12_3-->TF2_2+Pa1_3
-   c(23+66)=c(9)   !reaction 23: TF2_2+Pra1_3-->Pra12_3
-   c(24+66)=c(10)   !reaction 24: Pra12_3-->TF2_2+Pra1_3
-   c(25+66)=10.d0   !reaction 25: Pr_3-->Pr_3+M_3
-   c(26+66)=c(25)   !reaction 26: Pra1_3-->Pra1_3+M_3
-   c(27+66)=c(25)   !reaction 27: Pra2_3-->Pra2_3+M_3
-   c(28+66)=c(25)   !reaction 27: Pra12_3-->Pra12_3+M_3
-   c(29+66)=10.d0   !reaction 11: M_3-->...k4
-   c(30+66)=50.d0   !reaction 12: M_3-->M_3+TF_3
-   c(31+66)=1.d0   !reaction 13: TF_3-->...
-   c(32+66)=1.d0/v*0.1   !reaction 14: TF_3+TF_3--> TF2_3
-   c(33+66)=1.d0   !reaction 15: TF2_3 -->TF_3+TF_3
+   c(67)=0.01d0   !reaction 67: P_3-->Pr_3 
+   c(68)=c(2)   !reaction 68: Pr_3-->P_3
+   c(69)=0.01d0   !reaction 69: Pa1_3-->Pra1_3 
+   c(70)=c(2)   !reaction 70: Pra1_3-->Pa1_3
+   c(71)=0.01d0   !reaction 71: Pa2_3-->Pra2_3  
+   c(72)=c(2)   !reaction 72: Pra2_3-->Pa2_3
+   c(73)=10.d0   !reaction 73: Pa12_3-->Pra12_3 
+   c(74)=c(2)   !reaction 74: Pra12_3-->Pa12_3
+   c(75)=1.0d0/v   !reaction 75: TF2_1+P_3-->Pa1_3
+   c(76)=1.d0   !reaction 76: Pa1_3-->TF2_1+P_3
+   c(77)=c(9)   !reaction 77: TF2_1+Pr_3-->Pra1_3
+   c(78)=c(10)   !reaction 78: Pra1_3-->TF2_1+Pr_3
+   c(79)=1.0d0/v   !reaction 79: TF2_2+P_3-->Pa2_3
+   c(80)=1.d0   !reaction 80: Pa2_3-->TF2_2+P_3
+   c(81)=c(9)   !reaction 81: TF2_2+Pr_3-->Pra2_3
+   c(82)=c(10)   !reaction 82: Pra1_3-->TF2_2+Pr_3
+   c(83)=1.0d0/v   !reaction 83: TF2_1+Pa2_3-->Pa12_3
+   c(84)=1.d0   !reaction 84: Pa12_3-->TF2_1+Pa2_3
+   c(85)=c(9)   !reaction 85: TF2_1+Pra2_3-->Pra12_3
+   c(86)=c(10)   !reaction 86: Pra12_3-->TF2_1+Pra2_3
+   c(87)=1.0d0/v   !reaction 87: TF2_2+Pa1_3-->Pa12_3
+   c(88)=1.d0   !reaction 88: Pa12_3-->TF2_2+Pa1_3
+   c(89)=c(9)   !reaction 89: TF2_2+Pra1_3-->Pra12_3
+   c(90)=c(10)   !reaction 90: Pra12_3-->TF2_2+Pra1_3
+   c(91)=10.d0   !reaction 91: Pr_3-->Pr_3+M_3
+   c(92)=c(91)   !reaction 92: Pra1_3-->Pra1_3+M_3
+   c(93)=c(91)   !reaction 93: Pra2_3-->Pra2_3+M_3
+   c(94)=c(91)   !reaction 94: Pra12_3-->Pra12_3+M_3
+   c(95)=10.d0   !reaction 95: M_3-->...k4
+   c(96)=50.d0   !reaction 96: M_3-->M_3+TF_3
+   c(97)=1.d0   !reaction 97: TF_3-->...
+   c(98)=1.d0/v*0.1   !reaction 98: TF_3+TF_3--> TF2_3
+   c(99)=1.d0   !reaction 99: TF2_3 -->TF_3+TF_3
 
    if (p0_3.eqv..true.) then
-      c(1+66)=0.01d0   !reaction 1: P_3-->Pr_3
-      c(3+66)=c(1+66)   !reaction 3: Pa1_3-->Pra1_3
-      c(5+66)=c(1+66)   !reaction 5: Pa2_3-->Pra2_3
-      c(7+66)=c(1+66)   !reaction 7: Pa12_3-->Pra12_3
+      c(67)=0.01d0   !reaction 67: P_3-->Pr_3
+      c(69)=c(67)   !reaction 69: Pa1_3-->Pra1_3
+      c(71)=c(67)   !reaction 71: Pa2_3-->Pra2_3
+      c(73)=c(67)   !reaction 73: Pa12_3-->Pra12_3
    else if (p1_3.eqv..true.) then
-      c(1+66)=10.d0   !reaction 1: P_3-->Pr_3
-      c(3+66)=c(1+66)   !reaction 3: Pa1_3-->Pra1_3
-      c(5+66)=c(1+66)   !reaction 5: Pa2_3-->Pra2_3
-      c(7+66)=c(1+66)   !reaction 7: Pa12_3-->Pra12_3
+      c(67)=10.d0   !reaction 67: P_3-->Pr_3
+      c(69)=c(67)   !reaction 69: Pa1_3-->Pra1_3
+      c(71)=c(67)   !reaction 71: Pa2_3-->Pra2_3
+      c(73)=c(67)   !reaction 73: Pa12_3-->Pra12_3
    end if
-
-
 
    y(1)=1   !P_1
    y(2)=0   !Pa2_1
@@ -279,133 +258,108 @@ write(1,*)'time',',','P_1',',','Pa2_1',',','Pa3_1',',','Pa23_1',',','Pr_1',',','
             ,y(22)
             write(3,*)t,',',y(23),',',y(24),',',y(25),',',y(26),',',y(27),',',y(28),',',y(29),',',y(30),',',y(31),',',y(32),','&
             ,y(33)
-
             aux_write=t+incremento_t
-
          end if
 
-      h(1)=real(y(1),8)   !reaction 1: P_1-->Pr_1
-      h(2)=real(y(5),8)   !reaction 2: Pr_1-->P_1
-      h(3)=real(y(2),8)   !reaction 3: Pa2_1-->Pra2_1
-      h(4)=real(y(6),8)   !reaction 4: Pra2_1-->Pa2_1
-      h(5)=real(y(3),8)   !reaction 5: Pa3_1-->Pra3_1
-      h(6)=real(y(7),8)   !reaction 6: Pra3_1-->Pa3_1
-      h(7)=real(y(4),8)   !reaction 7: Pa23_1-->Pra23_1
-      h(8)=real(y(8),8)   !reaction 8: Pra23_1-->Pa23_1
-
-      h(9)=real(y(22),8)*real(y(1),8)   !reaction 9: TF2_2+P_1-->Pa2_1
-      h(10)=real(y(2),8)   !reaction 10: Pa2_1-->TF2_2+P_1
-      h(11)=real(y(22),8)*real(y(5),8)   !reaction11: TF2_2+Pr_1-->Pra2_1
-      h(12)=real(y(6),8)   !reaction 12: Pra2_1-->TF2_2+Pr_1
-
-      h(13)=real(y(33),8)*real(y(1),8)   !reaction 13: TF2_3+P_1-->Pa3_1
-      h(14)=real(y(3),8)   !reaction 14: Pa3_1-->TF2_3+P_1
-      h(15)=real(y(33),8)*real(y(5),8)   !reaction 15: TF2_3+Pr_1-->Pra3_1
-      h(16)=real(y(7),8)   !reaction 16: Pra2_1-->TF2_3+Pr_1
-
-      h(17)=real(y(22),8)*real(y(3),8)   !reaction 17: TF2_2+Pa3_1-->Pa23_1
-      h(18)=real(y(4),8)   !reaction 18: Pa23_1-->TF2_2+Pa3_1
-      h(19)=real(y(22),8)*real(y(7),8)   !reaction 19: TF2_2+Pra3_1-->Pra23_1
-      h(20)=real(y(8),8)   !reaction 20: Pra23_1-->TF2_2+Pra3_1
-
-      h(21)=real(y(33),8)*real(y(2),8)   !reaction 21: TF2_3+Pa2_1-->Pa23_1
-      h(22)=real(y(4),8)   !reaction 22: Pa23_1-->TF2_3+Pa2_1
-      h(23)=real(y(33),8)*real(y(6),8)   !reaction 23: TF2_3+Pra2_1-->Pra23_1
-      h(24)=real(y(8),8)   !reaction 24: Pra23_1-->TF2_3+Pra2_1
-
-      h(25)=real(y(5),8)   !reaction 25: Pr_1-->Pr_1+M_1
-      h(26)=real(y(6),8)   !reaction 26: Pra2_1-->Pra2_1+M_1
-      h(27)=real(y(7),8)   !reaction 27: Pra3_1-->Pra3_1+M_1
-      h(28)=real(y(8),8)   !reaction 28: Pra23_1-->Pra23_1+M_1
-
-      h(29)=real(y(9),8)   !reaction 29: M_1-->...
-      h(30)=real(y(9),8)   !reaction 30: M_1-->M_1+TF_1
-      h(31)=real(y(10),8)   !reaction 31: TF_1-->...
-
-      h(32)=real(y(10),8)*(real(y(10),8)-1)/2   !reaction 32: TF_1+TF_1--> TF2_1
-      h(33)=real(y(11),8)   !reaction 33: TF2_1 -->TF_1+TF_1
-
-      h(1+33)=real(y(1+11),8)   !reaction 1: P_1-->Pr_1
-      h(2+33)=real(y(5+11),8)   !reaction 2: Pr_1-->P_1
-      h(3+33)=real(y(2+11),8)   !reaction 3: Pa2_1-->Pra2_1
-      h(4+33)=real(y(6+11),8)   !reaction 4: Pra2_1-->Pa2_1
-      h(5+33)=real(y(3+11),8)   !reaction 5: Pa3_1-->Pra3_1
-      h(6+33)=real(y(7+11),8)   !reaction 6: Pra3_1-->Pa3_1
-      h(7+33)=real(y(4+11),8)   !reaction 7: Pa23_1-->Pra23_1
-      h(8+33)=real(y(8+11),8)   !reaction 8: Pra23_1-->Pa23_1
-
-      h(9+33)=real(y(11),8)*real(y(1+11),8)   !reaction 9: TF2_2+P_1-->Pa2_1
-      h(10+33)=real(y(2+11),8)   !reaction 10: Pa2_1-->TF2_2+P_1
-      h(11+33)=real(y(11),8)*real(y(5+11),8)   !reaction11: TF2_2+Pr_1-->Pra2_1
-      h(12+33)=real(y(6+11),8)   !reaction 12: Pra2_1-->TF2_2+Pr_1
-
-      h(13+33)=real(y(33),8)*real(y(1+11),8)   !reaction 13: TF2_3+P_1-->Pa3_1
-      h(14+33)=real(y(3+11),8)   !reaction 14: Pa3_1-->TF2_3+P_1
-      h(15+33)=real(y(33),8)*real(y(5+11),8)   !reaction 15: TF2_3+Pr_1-->Pra3_1
-      h(16+33)=real(y(7+11),8)   !reaction 16: Pra2_1-->TF2_3+Pr_1
-
-      h(17+33)=real(y(11),8)*real(y(3+11),8)   !reaction 17: TF2_2+Pa3_1-->Pa23_1
-      h(18+33)=real(y(4+11),8)   !reaction 18: Pa23_1-->TF2_2+Pa3_1
-      h(19+33)=real(y(11),8)*real(y(7+11),8)   !reaction 19: TF2_2+Pra3_1-->Pra23_1
-      h(20+33)=real(y(8+11),8)   !reaction 20: Pra23_1-->TF2_2+Pra3_1
-
-      h(21+33)=real(y(33),8)*real(y(2+11),8)   !reaction 21: TF2_3+Pa2_1-->Pa23_1
-      h(22+33)=real(y(4+11),8)   !reaction 22: Pa23_1-->TF2_3+Pa2_1
-      h(23+33)=real(y(33),8)*real(y(6+11),8)   !reaction 23: TF2_3+Pra2_1-->Pra23_1
-      h(24+33)=real(y(8+11),8)   !reaction 24: Pra23_1-->TF2_3+Pra2_1
-
-      h(25+33)=real(y(5+11),8)   !reaction 25: Pr_1-->Pr_1+M_1
-      h(26+33)=real(y(6+11),8)   !reaction 26: Pra2_1-->Pra2_1+M_1
-      h(27+33)=real(y(7+11),8)   !reaction 27: Pra3_1-->Pra3_1+M_1
-      h(28+33)=real(y(8+11),8)   !reaction 28: Pra23_1-->Pra23_1+M_1
-
-      h(29+33)=real(y(9+11),8)   !reaction 29: M_1-->...
-      h(30+33)=real(y(9+11),8)   !reaction 30: M_1-->M_1+TF_1
-      h(31+33)=real(y(10+11),8)   !reaction 31: TF_1-->...
-
-      h(32+33)=real(y(10+11),8)*(real(y(10+11),8)-1)/2   !reaction 32: TF_1+TF_1--> TF2_1
-      h(33+33)=real(y(11+11),8)   !reaction 33: TF2_1 -->TF_1+TF_1
-
-      h(1+66)=real(y(1+22),8)   !reaction 1: P_1-->Pr_1
-      h(2+66)=real(y(5+22),8)   !reaction 2: Pr_1-->P_1
-      h(3+66)=real(y(2+22),8)   !reaction 3: Pa2_1-->Pra2_1
-      h(4+66)=real(y(6+22),8)   !reaction 4: Pra2_1-->Pa2_1
-      h(5+66)=real(y(3+22),8)   !reaction 5: Pa3_1-->Pra3_1
-      h(6+66)=real(y(7+22),8)   !reaction 6: Pra3_1-->Pa3_1
-      h(7+66)=real(y(4+22),8)   !reaction 7: Pa23_1-->Pra23_1
-      h(8+66)=real(y(8+22),8)   !reaction 8: Pra23_1-->Pa23_1
-
-      h(9+66)=real(y(11),8)*real(y(1+22),8)   !reaction 9: TF2_2+P_1-->Pa2_1
-      h(10+66)=real(y(2+22),8)   !reaction 10: Pa2_1-->TF2_2+P_1
-      h(11+66)=real(y(11),8)*real(y(5+22),8)   !reaction11: TF2_2+Pr_1-->Pra2_1
-      h(12+66)=real(y(6+22),8)   !reaction 12: Pra2_1-->TF2_2+Pr_1
-
-      h(13+66)=real(y(22),8)*real(y(1+22),8)   !reaction 13: TF2_3+P_1-->Pa3_1
-      h(14+66)=real(y(3+22),8)   !reaction 14: Pa3_1-->TF2_3+P_1
-      h(15+66)=real(y(22),8)*real(y(5+22),8)   !reaction 15: TF2_3+Pr_1-->Pra3_1
-      h(16+66)=real(y(7+22),8)   !reaction 16: Pra2_1-->TF2_3+Pr_1
-
-      h(17+66)=real(y(11),8)*real(y(3+22),8)   !reaction 17: TF2_2+Pa3_1-->Pa23_1
-      h(18+66)=real(y(4+22),8)   !reaction 18: Pa23_1-->TF2_2+Pa3_1
-      h(19+66)=real(y(11),8)*real(y(7+22),8)   !reaction 19: TF2_2+Pra3_1-->Pra23_1
-      h(20+66)=real(y(8+22),8)   !reaction 20: Pra23_1-->TF2_2+Pra3_1
-
-      h(21+66)=real(y(22),8)*real(y(2+22),8)   !reaction 21: TF2_3+Pa2_1-->Pa23_1
-      h(22+66)=real(y(4+22),8)   !reaction 22: Pa23_1-->TF2_3+Pa2_1
-      h(23+66)=real(y(22),8)*real(y(6+22),8)   !reaction 23: TF2_3+Pra2_1-->Pra23_1
-      h(24+66)=real(y(8+22),8)   !reaction 24: Pra23_1-->TF2_3+Pra2_1
-
-      h(25+66)=real(y(5+22),8)   !reaction 25: Pr_1-->Pr_1+M_1
-      h(26+66)=real(y(6+22),8)   !reaction 26: Pra2_1-->Pra2_1+M_1
-      h(27+66)=real(y(7+22),8)   !reaction 27: Pra3_1-->Pra3_1+M_1
-      h(28+66)=real(y(8+22),8)   !reaction 28: Pra23_1-->Pra23_1+M_1
-
-      h(29+66)=real(y(9+22),8)   !reaction 29: M_1-->...
-      h(30+66)=real(y(9+22),8)   !reaction 30: M_1-->M_1+TF_1
-      h(31+66)=real(y(10+22),8)   !reaction 31: TF_1-->...
-
-      h(32+66)=real(y(10+22),8)*(real(y(10+22),8)-1)/2   !reaction 32: TF_1+TF_1--> TF2_1
-      h(33+66)=real(y(11+22),8)   !reaction 33: TF2_1 -->TF_1+TF_1
+      h(1)=real(y(1),8)   !reaction 1
+      h(2)=real(y(5),8)   !reaction 2
+      h(3)=real(y(2),8)   !reaction 3
+      h(4)=real(y(6),8)   !reaction 4
+      h(5)=real(y(3),8)   !reaction 5
+      h(6)=real(y(7),8)   !reaction 6
+      h(7)=real(y(4),8)   !reaction 7
+      h(8)=real(y(8),8)   !reaction 8
+      h(9)=real(y(22),8)*real(y(1),8)   !reaction 9
+      h(10)=real(y(2),8)   !reaction 10
+      h(11)=real(y(22),8)*real(y(5),8)   !reaction 11
+      h(12)=real(y(6),8)   !reaction 12
+      h(13)=real(y(33),8)*real(y(1),8)   !reaction 13
+      h(14)=real(y(3),8)   !reaction 14
+      h(15)=real(y(33),8)*real(y(5),8)   !reaction 15
+      h(16)=real(y(7),8)   !reaction 16
+      h(17)=real(y(22),8)*real(y(3),8)   !reaction 17
+      h(18)=real(y(4),8)   !reaction 18
+      h(19)=real(y(22),8)*real(y(7),8)   !reaction 19
+      h(20)=real(y(8),8)   !reaction 20
+      h(21)=real(y(33),8)*real(y(2),8)   !reaction 21
+      h(22)=real(y(4),8)   !reaction 22
+      h(23)=real(y(33),8)*real(y(6),8)   !reaction 23
+      h(24)=real(y(8),8)   !reaction 24
+      h(25)=real(y(5),8)   !reaction 25
+      h(26)=real(y(6),8)   !reaction 26
+      h(27)=real(y(7),8)   !reaction 27
+      h(28)=real(y(8),8)   !reaction 28
+      h(29)=real(y(9),8)   !reaction 29
+      h(30)=real(y(9),8)   !reaction 30
+      h(31)=real(y(10),8)   !reaction 31
+      h(32)=real(y(10),8)*(real(y(10),8)-1)/2   !reaction 32
+      h(33)=real(y(11),8)   !reaction 33
+      h(34)=real(y(12),8)   !reaction 34
+      h(35)=real(y(16),8)   !reaction 35
+      h(36)=real(y(13),8)   !reaction 36
+      h(37)=real(y(17),8)   !reaction 37
+      h(38)=real(y(14),8)   !reaction 38
+      h(39)=real(y(18),8)   !reaction 39
+      h(40)=real(y(15),8)   !reaction 40
+      h(41)=real(y(19),8)   !reaction 41
+      h(42)=real(y(11),8)*real(y(12),8)   !reaction 42
+      h(43)=real(y(13),8)   !reaction 43
+      h(44)=real(y(11),8)*real(y(16),8)   !reaction 44
+      h(45)=real(y(17),8)   !reaction 45
+      h(46)=real(y(33),8)*real(y(12),8)   !reaction 46
+      h(47)=real(y(14),8)   !reaction 47
+      h(48)=real(y(33),8)*real(y(16),8)   !reaction 48
+      h(49)=real(y(18),8)   !reaction 49
+      h(50)=real(y(11),8)*real(y(14),8)   !reaction 50
+      h(51)=real(y(15),8)   !reaction 51
+      h(52)=real(y(11),8)*real(y(18),8)   !reaction 52
+      h(53)=real(y(19),8)   !reaction 53
+      h(54)=real(y(33),8)*real(y(13),8)   !reaction 54
+      h(55)=real(y(15),8)   !reaction 55
+      h(56)=real(y(33),8)*real(y(17),8)   !reaction 56
+      h(57)=real(y(19),8)   !reaction 57
+      h(58)=real(y(16),8)   !reaction 58
+      h(59)=real(y(17),8)   !reaction 59
+      h(60)=real(y(18),8)   !reaction 60
+      h(61)=real(y(19),8)   !reaction 61
+      h(62)=real(y(20),8)   !reaction 62
+      h(63)=real(y(20),8)   !reaction 63
+      h(64)=real(y(21),8)   !reaction 64
+      h(65)=real(y(21),8)*(real(y(21),8)-1)/2   !reaction 65
+      h(66)=real(y(22),8)   !reaction 66
+      h(67)=real(y(23),8)   !reaction 67
+      h(68)=real(y(27),8)   !reaction 68
+      h(69)=real(y(24),8)   !reaction 69
+      h(70)=real(y(28),8)   !reaction 70
+      h(71)=real(y(25),8)   !reaction 71
+      h(72)=real(y(29),8)   !reaction 72
+      h(73)=real(y(26),8)   !reaction 73
+      h(74)=real(y(30),8)   !reaction 74
+      h(75)=real(y(11),8)*real(y(23),8)   !reaction 75
+      h(76)=real(y(24),8)   !reaction 76
+      h(77)=real(y(11),8)*real(y(27),8)   !reaction 77
+      h(78)=real(y(28),8)   !reaction 78
+      h(79)=real(y(22),8)*real(y(23),8)   !reaction 79
+      h(80)=real(y(25),8)   !reaction 80
+      h(81)=real(y(22),8)*real(y(27),8)   !reaction 81
+      h(82)=real(y(29),8)   !reaction 82
+      h(83)=real(y(11),8)*real(y(25),8)   !reaction 83
+      h(84)=real(y(26),8)   !reaction 84
+      h(85)=real(y(11),8)*real(y(29),8)   !reaction 85
+      h(86)=real(y(30),8)   !reaction 86
+      h(87)=real(y(22),8)*real(y(24),8)   !reaction 87
+      h(88)=real(y(26),8)   !reaction 88
+      h(89)=real(y(22),8)*real(y(28),8)   !reaction 89
+      h(90)=real(y(30),8)   !reaction 90
+      h(91)=real(y(27),8)   !reaction 91
+      h(92)=real(y(28),8)   !reaction 92
+      h(93)=real(y(29),8)   !reaction 93
+      h(94)=real(y(30),8)   !reaction 94
+      h(95)=real(y(31),8)   !reaction 95
+      h(96)=real(y(31),8)   !reaction 96
+      h(97)=real(y(32),8)   !reaction 97
+      h(98)=real(y(32),8)*(real(y(32),8)-1)/2   !reaction 98
+      h(99)=real(y(33),8)   !reaction 99
 
       do i=1,m
          a(i)=h(i)*c(i)
@@ -442,7 +396,6 @@ write(1,*)'time',',','P_1',',','Pa2_1',',','Pa3_1',',','Pa23_1',',','Pr_1',',','
          time111=time111+tau
       end if
 
-
       aux1=r2*a0
       aux2=0.0
       mu=0
@@ -456,353 +409,334 @@ write(1,*)'time',',','P_1',',','Pa2_1',',','Pa3_1',',','Pa23_1',',','Pr_1',',','
 
       t=t+tau
 
-      if (mu==1) then !reaction 1: P_1-->Pr_1
+      if (mu==1) then !reaction 1
          y(1)=y(1)-1
          y(5)=y(5)+1
-      else if (mu==2) then !reaction 2: Pr_1-->P_1
+      else if (mu==2) then !reaction 2
          y(1)=y(1)+1
          y(5)=y(5)-1
-      else if (mu==3) then !reaction 3: Pa2_1-->Pra2_1
+      else if (mu==3) then !reaction 3
          y(2)=y(2)-1
          y(6)=y(6)+1
-      else if (mu==4) then !reaction 4: Pra2_1-->Pa2_1
+      else if (mu==4) then !reaction 4
          y(2)=y(2)+1
          y(6)=y(6)-1
-      else if (mu==5) then !reaction 5: Pa3_1-->Pra3_1
+      else if (mu==5) then !reaction 5
          y(3)=y(3)-1
          y(7)=y(7)+1
-      else if (mu==6) then !reaction 6: Pra3_1-->Pa3_1
+      else if (mu==6) then !reaction 6
          y(3)=y(3)+1
          y(7)=y(7)-1
-      else if (mu==7) then !reaction 7: Pa23_1-->Pra23_1
+      else if (mu==7) then !reaction 7
          y(4)=y(4)-1
          y(8)=y(8)+1
-      else if (mu==8) then !reaction 8: Pra23_1-->Pa23_1
+      else if (mu==8) then !reaction 8
          y(4)=y(4)+1
          y(8)=y(8)-1
-
-      else if (mu==9) then !reaction 9: TF2_2+P_1-->Pa2_1
+      else if (mu==9) then !reaction 9
          y(1)=y(1)-1
          y(22)=y(22)-1
          y(2)=y(2)+1
-      else if (mu==10) then !reaction 10: Pa2_1-->TF2_2+P_1
+      else if (mu==10) then !reaction 10
          y(1)=y(1)+1
          y(22)=y(22)+1
          y(2)=y(2)-1
-      else if (mu==11) then !reaction11: TF2_2+Pr_1-->Pra2_1
+      else if (mu==11) then !reaction 11
          y(5)=y(5)-1
          y(22)=y(22)-1
          y(6)=y(6)+1
-      else if (mu==12) then !reaction 12: Pra2_1-->TF2_2+Pr_1
+      else if (mu==12) then !reaction 12
          y(5)=y(5)+1
          y(22)=y(22)+1
          y(6)=y(6)-1
-
-      else if (mu==13) then !reaction 13: TF2_3+P_1-->Pa3_1
+      else if (mu==13) then !reaction 13
          y(1)=y(1)-1
          y(33)=y(33)-1
          y(3)=y(3)+1
-      else if (mu==14) then !reaction 14: Pa3_1-->TF2_3+P_1
+      else if (mu==14) then !reaction 14
          y(1)=y(1)+1
          y(33)=y(33)+1
          y(3)=y(3)-1
-      else if (mu==15) then !reaction 15: TF2_3+Pr_1-->Pra3_1
+      else if (mu==15) then !reaction 15
          y(5)=y(5)-1
          y(33)=y(33)-1
          y(7)=y(7)+1
-      else if (mu==16) then !reaction 16: Pra2_1-->TF2_3+Pr_1
+      else if (mu==16) then !reaction 16
          y(5)=y(5)+1
          y(33)=y(33)+1
          y(7)=y(7)-1
-
-      else if (mu==17) then   !reaction 17: TF2_2+Pa3_1-->Pa23_1
+      else if (mu==17) then !reaction 17
          y(3)=y(3)-1
          y(22)=y(22)-1
          y(4)=y(4)+1
-      else if (mu==18) then   !reaction 18: Pa23_1-->TF2_2+Pa3_1
+      else if (mu==18) then !reaction 18
          y(3)=y(3)+1
          y(22)=y(22)+1
          y(4)=y(4)-1
-      else if (mu==19) then   !reaction 19: TF2_2+Pra3_1-->Pra23_1
+      else if (mu==19) then !reaction 19
          y(7)=y(7)-1
          y(22)=y(22)-1
          y(8)=y(8)+1
-      else if (mu==20) then   !reaction 20: Pra23_1-->TF2_2+Pra3_1
+      else if (mu==20) then !reaction 20
          y(7)=y(7)+1
          y(22)=y(22)+1
          y(8)=y(8)-1
-
-      else if (mu==21) then   !reaction 21: TF2_3+Pa2_1-->Pa23_1
+      else if (mu==21) then !reaction 21
          y(2)=y(2)-1
          y(33)=y(33)-1
          y(4)=y(4)+1
-      else if (mu==22) then   !reaction 22: Pa23_1-->TF2_3+Pa2_1
+      else if (mu==22) then !reaction 22
          y(2)=y(2)+1
          y(33)=y(33)+1
          y(4)=y(4)-1
-      else if (mu==23) then   !reaction 23: TF2_3+Pra2_1-->Pra23_1
+      else if (mu==23) then !reaction 23
          y(6)=y(6)-1
          y(33)=y(33)-1
          y(8)=y(8)+1
-      else if (mu==24) then   !reaction 24: Pra23_1-->TF2_3+Pra2_1
+      else if (mu==24) then !reaction 24
          y(6)=y(6)+1
          y(33)=y(33)+1
          y(8)=y(8)-1
-
-      else if (mu==25) then   !reaction 25: Pr_1-->Pr_1+M_1
+      else if (mu==25) then !reaction 25
          y(9)=y(9)+1
-      else if (mu==26) then   !reaction 26: Pra2_1-->Pra2_1+M_1
+      else if (mu==26) then !reaction 26
          y(9)=y(9)+1
-      else if (mu==27) then   !reaction 27: Pra3_1-->Pra3_1+M_1
+      else if (mu==27) then !reaction 27
          y(9)=y(9)+1
-      else if (mu==28) then   !reaction 28: Pra23_1-->Pra23_1+M_1
+      else if (mu==28) then !reaction 28
          y(9)=y(9)+1
-
-      else if (mu==29) then   !reaction 29: M_1-->...
+      else if (mu==29) then !reaction 29
          y(9)=y(9)-1
-      else if (mu==30) then   !reaction 30: M_1-->M_1+TF_1
+      else if (mu==30) then !reaction 30
          y(10)=y(10)+1
-      else if (mu==31) then   !reaction 31: TF_1-->...
+      else if (mu==31) then !reaction 31
          y(10)=y(10)-1
-
-      else if (mu==32) then   !reaction 32: TF_1+TF_1--> TF2_1
+      else if (mu==32) then !reaction 32
          y(10)=y(10)-2
          y(11)=y(11)+1
-      else if (mu==33) then   !reaction 33: TF2_1 -->TF_1+TF_1
+      else if (mu==33) then !reaction 33
          y(10)=y(10)+2
          y(11)=y(11)-1
-
-      else if (mu==1+33)  then !reaction 1: P_1-->Pr_1
-         y(1+11)=y(1+11)-1
-         y(5+11)=y(5+11)+1
-      else if (mu==2+33)  then !reaction 2: Pr_1-->P_1
-         y(1+11)=y(1+11)+1
-         y(5+11)=y(5+11)-1
-      else if (mu==3+33)  then !reaction 3: Pa2_1-->Pra2_1
-         y(2+11)=y(2+11)-1
-         y(6+11)=y(6+11)+1
-      else if (mu==4+33)  then !reaction 4: Pra2_1-->Pa2_1
-         y(2+11)=y(2+11)+1
-         y(6+11)=y(6+11)-1
-      else if (mu==5+33)  then !reaction 5: Pa3_1-->Pra3_1
-         y(3+11)=y(3+11)-1
-         y(7+11)=y(7+11)+1
-      else if (mu==6+33)  then !reaction 6: Pra3_1-->Pa3_1
-         y(3+11)=y(3+11)+1
-         y(7+11)=y(7+11)-1
-      else if (mu==7+33)  then !reaction 7: Pa23_1-->Pra23_1
-         y(4+11)=y(4+11)-1
-         y(8+11)=y(8+11)+1
-      else if (mu==8+33)  then !reaction 8: Pra23_1-->Pa23_1
-         y(4+11)=y(4+11)+1
-         y(8+11)=y(8+11)-1
-
-      else if (mu==9+33)  then !reaction 9: TF2_2+P_1-->Pa2_1
-         y(1+11)=y(1+11)-1
-         y(11)=y(11)-1
-         y(2+11)=y(2+11)+1
-      else if (mu==10+33)  then !reaction 10: Pa2_1-->TF2_2+P_1
-         y(1+11)=y(1+11)+1
-         y(11)=y(11)+1
-         y(2+11)=y(2+11)-1
-      else if (mu==11+33)  then !reaction11: TF2_2+Pr_1-->Pra2_1
-         y(5+11)=y(5+11)-1
-         y(11)=y(11)-1
-         y(6+11)=y(6+11)+1
-      else if (mu==12+33)  then !reaction 12: Pra2_1-->TF2_2+Pr_1
-         y(5+11)=y(5+11)+1
-         y(11)=y(11)+1
-         y(6+11)=y(6+11)-1
-
-      else if (mu==13+33)  then !reaction 13: TF2_3+P_1-->Pa3_1
-         y(1+11)=y(1+11)-1
-         y(33)=y(33)-1
-         y(3+11)=y(3+11)+1
-      else if (mu==14+33)  then !reaction 14: Pa3_1-->TF2_3+P_1
-         y(1+11)=y(1+11)+1
-         y(33)=y(33)+1
-         y(3+11)=y(3+11)-1
-      else if (mu==15+33)  then !reaction 15: TF2_3+Pr_1-->Pra3_1
-         y(5+11)=y(5+11)-1
-         y(33)=y(33)-1
-         y(7+11)=y(7+11)+1
-      else if (mu==16+33)  then !reaction 16: Pra2_1-->TF2_3+Pr_1
-         y(5+11)=y(5+11)+1
-         y(33)=y(33)+1
-         y(7+11)=y(7+11)-1
-
-      else if (mu==17+33)  then   !reaction 17: TF2_2+Pa3_1-->Pa23_1
-         y(3+11)=y(3+11)-1
-         y(11)=y(11)-1
-         y(4+11)=y(4+11)+1
-      else if (mu==18+33)  then   !reaction 18: Pa23_1-->TF2_2+Pa3_1
-         y(3+11)=y(3+11)+1
-         y(11)=y(11)+1
-         y(4+11)=y(4+11)-1
-      else if (mu==19+33)  then   !reaction 19: TF2_2+Pra3_1-->Pra23_1
-         y(7+11)=y(7+11)-1
-         y(11)=y(11)-1
-         y(8+11)=y(8+11)+1
-      else if (mu==20+33)  then   !reaction 20: Pra23_1-->TF2_2+Pra3_1
-         y(7+11)=y(7+11)+1
-         y(11)=y(11)+1
-         y(8+11)=y(8+11)-1
-
-      else if (mu==21+33)  then   !reaction 21: TF2_3+Pa2_1-->Pa23_1
-         y(2+11)=y(2+11)-1
-         y(33)=y(33)-1
-         y(4+11)=y(4+11)+1
-      else if (mu==22+33)  then   !reaction 22: Pa23_1-->TF2_3+Pa2_1
-         y(2+11)=y(2+11)+1
-         y(33)=y(33)+1
-         y(4+11)=y(4+11)-1
-      else if (mu==23+33)  then   !reaction 23: TF2_3+Pra2_1-->Pra23_1
-         y(6+11)=y(6+11)-1
-         y(33)=y(33)-1
-         y(8+11)=y(8+11)+1
-      else if (mu==24+33)  then   !reaction 24: Pra23_1-->TF2_3+Pra2_1
-         y(6+11)=y(6+11)+1
-         y(33)=y(33)+1
-         y(8+11)=y(8+11)-1
-
-      else if (mu==25+33)  then   !reaction 25: Pr_1-->Pr_1+M_1
-         y(9+11)=y(9+11)+1
-      else if (mu==26+33)  then   !reaction 26: Pra2_1-->Pra2_1+M_1
-         y(9+11)=y(9+11)+1
-      else if (mu==27+33)  then   !reaction 27: Pra3_1-->Pra3_1+M_1
-         y(9+11)=y(9+11)+1
-      else if (mu==28+33)  then   !reaction 28: Pra23_1-->Pra23_1+M_1
-         y(9+11)=y(9+11)+1
-
-      else if (mu==29+33)  then   !reaction 29: M_1-->...
-         y(9+11)=y(9+11)-1
-      else if (mu==30+33)  then   !reaction 30: M_1-->M_1+TF_1
-         y(10+11)=y(10+11)+1
-      else if (mu==31+33)  then   !reaction 31: TF_1-->...
-         y(10+11)=y(10+11)-1
-
-      else if (mu==32+33)  then   !reaction 32: TF_1+TF_1--> TF2_1
-         y(10+11)=y(10+11)-2
-         y(11+11)=y(11+11)+1
-      else if (mu==33+33)  then   !reaction 33: TF2_1 -->TF_1+TF_1
-         y(10+11)=y(10+11)+2
-         y(11+11)=y(11+11)-1
-
-      else if (mu==1+66)  then !reaction 1: P_1-->Pr_1
-         y(1+22)=y(1+22)-1
-         y(5+22)=y(5+22)+1
-      else if (mu==2+66)  then !reaction 2: Pr_1-->P_1
-         y(1+22)=y(1+22)+1
-         y(5+22)=y(5+22)-1
-      else if (mu==3+66)  then !reaction 3: Pa2_1-->Pra2_1
-         y(2+22)=y(2+22)-1
-         y(6+22)=y(6+22)+1
-      else if (mu==4+66)  then !reaction 4: Pra2_1-->Pa2_1
-         y(2+22)=y(2+22)+1
-         y(6+22)=y(6+22)-1
-      else if (mu==5+66)  then !reaction 5: Pa3_1-->Pra3_1
-         y(3+22)=y(3+22)-1
-         y(7+22)=y(7+22)+1
-      else if (mu==6+66)  then !reaction 6: Pra3_1-->Pa3_1
-         y(3+22)=y(3+22)+1
-         y(7+22)=y(7+22)-1
-      else if (mu==7+66)  then !reaction 7: Pa23_1-->Pra23_1
-         y(4+22)=y(4+22)-1
-         y(8+22)=y(8+22)+1
-      else if (mu==8+66)  then !reaction 8: Pra23_1-->Pa23_1
-         y(4+22)=y(4+22)+1
-         y(8+22)=y(8+22)-1
-
-      else if (mu==9+66)  then !reaction 9: TF2_2+P_1-->Pa2_1
-         y(1+22)=y(1+22)-1
-         y(11)=y(11)-1
-         y(2+22)=y(2+22)+1
-      else if (mu==10+66)  then !reaction 10: Pa2_1-->TF2_2+P_1
-         y(1+22)=y(1+22)+1
-         y(11)=y(11)+1
-         y(2+22)=y(2+22)-1
-      else if (mu==11+66)  then !reaction11: TF2_2+Pr_1-->Pra2_1
-         y(5+22)=y(5+22)-1
-         y(11)=y(11)-1
-         y(6+22)=y(6+22)+1
-      else if (mu==12+66)  then !reaction 12: Pra2_1-->TF2_2+Pr_1
-         y(5+22)=y(5+22)+1
-         y(11)=y(11)+1
-         y(6+22)=y(6+22)-1
-
-      else if (mu==13+66)  then !reaction 13: TF2_3+P_1-->Pa3_1
-         y(1+22)=y(1+22)-1
+      else if (mu==34) then   !reaction 34
+         y(12)=y(12)-1
+         y(16)=y(16)+1
+      else if (mu==35) then   !reaction 35
+         y(12)=y(12)+1
+         y(16)=y(16)-1
+      else if (mu==36) then   !reaction 36
+         y(13)=y(13)-1
+         y(17)=y(17)+1
+      else if (mu==37) then   !reaction 37
+         y(13)=y(13)+1
+         y(17)=y(17)-1
+      else if (mu==38) then   !reaction 38
+         y(14)=y(14)-1
+         y(18)=y(18)+1
+      else if (mu==39) then   !reaction 39
+         y(14)=y(14)+1
+         y(18)=y(18)-1
+      else if (mu==40) then   !reaction 40
+         y(15)=y(15)-1
+         y(19)=y(19)+1
+      else if (mu==41) then   !reaction 41
+         y(15)=y(15)+1
+         y(19)=y(19)-1
+      else if (mu==42) then   !reaction 42
+         y(12)=y(12)-1
          y(22)=y(22)-1
-         y(3+22)=y(3+22)+1
-      else if (mu==14+66)  then !reaction 14: Pa3_1-->TF2_3+P_1
-         y(1+22)=y(1+22)+1
+         y(13)=y(13)+1
+      else if (mu==43) then   !reaction 43
+         y(12)=y(12)+1
          y(22)=y(22)+1
-         y(3+22)=y(3+22)-1
-      else if (mu==15+66)  then !reaction 15: TF2_3+Pr_1-->Pra3_1
-         y(5+22)=y(5+22)-1
+         y(13)=y(13)-1
+      else if (mu==44) then   !reaction 44
+         y(16)=y(16)-1
          y(22)=y(22)-1
-         y(7+22)=y(7+22)+1
-      else if (mu==16+66)  then !reaction 16: Pra2_1-->TF2_3+Pr_1
-         y(5+22)=y(5+22)+1
+         y(17)=y(17)+1
+      else if (mu==45) then   !reaction 45
+         y(16)=y(16)+1
          y(22)=y(22)+1
-         y(7+22)=y(7+22)-1
-
-      else if (mu==17+66)  then   !reaction 17: TF2_2+Pa3_1-->Pa23_1
-         y(3+22)=y(3+22)-1
-         y(11)=y(11)-1
-         y(4+22)=y(4+22)+1
-      else if (mu==18+66)  then   !reaction 18: Pa23_1-->TF2_2+Pa3_1
-         y(3+22)=y(3+22)+1
-         y(11)=y(11)+1
-         y(4+22)=y(4+22)-1
-      else if (mu==19+66)  then   !reaction 19: TF2_2+Pra3_1-->Pra23_1
-         y(7+22)=y(7+22)-1
-         y(11)=y(11)-1
-         y(8+22)=y(8+22)+1
-      else if (mu==20+66)  then   !reaction 20: Pra23_1-->TF2_2+Pra3_1
-         y(7+22)=y(7+22)+1
-         y(11)=y(11)+1
-         y(8+22)=y(8+22)-1
-
-      else if (mu==21+66)  then   !reaction 21: TF2_3+Pa2_1-->Pa23_1
-         y(2+22)=y(2+22)-1
+         y(17)=y(17)-1
+      else if (mu==46) then   !reaction 46
+         y(12)=y(12)-1
+         y(33)=y(33)-1
+         y(14)=y(14)+1
+      else if (mu==47) then   !reaction 47
+         y(12)=y(12)+1
+         y(33)=y(33)+1
+         y(14)=y(14)-1
+      else if (mu==48) then   !reaction 48
+         y(16)=y(16)-1
+         y(33)=y(33)-1
+         y(18)=y(18)+1
+      else if (mu==49) then   !reaction 49
+         y(16)=y(16)+1
+         y(33)=y(33)+1
+         y(18)=y(18)-1
+      else if (mu==50) then   !reaction 50
+         y(14)=y(14)-1
          y(22)=y(22)-1
-         y(4+22)=y(4+22)+1
-      else if (mu==22+66)  then   !reaction 22: Pa23_1-->TF2_3+Pa2_1
-         y(2+22)=y(2+22)+1
+         y(15)=y(15)+1
+      else if (mu==51) then   !reaction 51
+         y(14)=y(14)+1
          y(22)=y(22)+1
-         y(4+22)=y(4+22)-1
-      else if (mu==23+66)  then   !reaction 23: TF2_3+Pra2_1-->Pra23_1
-         y(6+22)=y(6+22)-1
+         y(15)=y(15)-1
+      else if (mu==52) then   !reaction 52
+         y(18)=y(18)-1
          y(22)=y(22)-1
-         y(8+22)=y(8+22)+1
-      else if (mu==24+66)  then   !reaction 24: Pra23_1-->TF2_3+Pra2_1
-         y(6+22)=y(6+22)+1
+         y(19)=y(19)+1
+      else if (mu==53) then   !reaction 53
+         y(18)=y(18)+1
          y(22)=y(22)+1
-         y(8+22)=y(8+22)-1
-
-      else if (mu==25+66)  then   !reaction 25: Pr_1-->Pr_1+M_1
-         y(9+22)=y(9+22)+1
-      else if (mu==26+66)  then   !reaction 26: Pra2_1-->Pra2_1+M_1
-         y(9+22)=y(9+22)+1
-      else if (mu==27+66)  then   !reaction 27: Pra3_1-->Pra3_1+M_1
-         y(9+22)=y(9+22)+1
-      else if (mu==28+66)  then   !reaction 28: Pra23_1-->Pra23_1+M_1
-         y(9+22)=y(9+22)+1
-
-      else if (mu==29+66)  then   !reaction 29: M_1-->...
-         y(9+22)=y(9+22)-1
-      else if (mu==30+66)  then   !reaction 30: M_1-->M_1+TF_1
-         y(10+22)=y(10+22)+1
-      else if (mu==31+66)  then   !reaction 31: TF_1-->...
-         y(10+22)=y(10+22)-1
-
-      else if (mu==32+66)  then   !reaction 32: TF_1+TF_1--> TF2_1
-         y(10+22)=y(10+22)-2
-         y(11+22)=y(11+22)+1
-      else if (mu==33+66)  then   !reaction 33: TF2_1 -->TF_1+TF_1
-         y(10+22)=y(10+22)+2
-         y(11+22)=y(11+22)-1
+         y(19)=y(19)-1
+      else if (mu==54) then   !reaction 54
+         y(13)=y(13)-1
+         y(33)=y(33)-1
+         y(15)=y(15)+1
+      else if (mu==55) then   !reaction 55
+         y(13)=y(13)+1
+         y(33)=y(33)+1
+         y(15)=y(15)-1
+      else if (mu==56) then   !reaction 56
+         y(17)=y(17)-1
+         y(33)=y(33)-1
+         y(19)=y(19)+1
+      else if (mu==57) then   !reaction 57
+         y(17)=y(17)+1
+         y(33)=y(33)+1
+         y(19)=y(19)-1
+      else if (mu==58) then   !reaction 58
+         y(16)=y(16)-1
+         y(20)=y(20)+1
+      else if (mu==59) then   !reaction 59
+         y(17)=y(17)-1
+         y(20)=y(20)+1
+      else if (mu==60) then   !reaction 60
+         y(18)=y(18)-1
+         y(20)=y(20)+1
+      else if (mu==61) then   !reaction 61
+         y(19)=y(19)-1
+         y(20)=y(20)+1
+      else if (mu==62) then   !reaction 62
+         y(20)=y(20)-1
+      else if (mu==63) then   !reaction 63
+         y(21)=y(21)+1
+      else if (mu==64) then   !reaction 64
+         y(21)=y(21)-1
+      else if (mu==65) then   !reaction 65
+         y(21)=y(21)-2
+         y(22)=y(22)+1
+      else if (mu==66) then   !reaction 66
+         y(21)=y(21)+2
+         y(22)=y(22)-1
+      else if (mu==67) then !reaction 67
+         y(23)=y(23)-1
+         y(27)=y(27)+1
+      else if (mu==68) then !reaction 68
+         y(23)=y(23)+1
+         y(27)=y(27)-1
+      else if (mu==69) then !reaction 69
+         y(24)=y(24)-1
+         y(28)=y(28)+1
+      else if (mu==70) then !reaction 70
+         y(24)=y(24)+1
+         y(28)=y(28)-1
+      else if (mu==71) then !reaction 71
+         y(25)=y(25)-1
+         y(29)=y(29)+1
+      else if (mu==72) then !reaction 72
+         y(25)=y(25)+1
+         y(29)=y(29)-1
+      else if (mu==73) then !reaction 73
+         y(26)=y(26)-1
+         y(30)=y(30)+1
+      else if (mu==74) then !reaction 74
+         y(26)=y(26)+1
+         y(30)=y(30)-1
+      else if (mu==75) then !reaction 75
+         y(23)=y(23)-1
+         y(33)=y(33)-1
+         y(24)=y(24)+1
+      else if (mu==76) then !reaction 76
+         y(23)=y(23)+1
+         y(33)=y(33)+1
+         y(24)=y(24)-1
+      else if (mu==77) then !reaction 77
+         y(27)=y(27)-1
+         y(33)=y(33)-1
+         y(28)=y(28)+1
+      else if (mu==78) then !reaction 78
+         y(27)=y(27)+1
+         y(33)=y(33)+1
+         y(28)=y(28)-1
+      else if (mu==79) then !reaction 79
+         y(23)=y(23)-1
+         y(45)=y(45)-1
+         y(25)=y(25)+1
+      else if (mu==80) then !reaction 80
+         y(23)=y(23)+1
+         y(45)=y(45)+1
+         y(25)=y(25)-1
+      else if (mu==81) then !reaction 81
+         y(27)=y(27)-1
+         y(45)=y(45)-1
+         y(29)=y(29)+1
+      else if (mu==82) then !reaction 82
+         y(27)=y(27)+1
+         y(45)=y(45)+1
+         y(29)=y(29)-1
+      else if (mu==83) then !reaction 83
+         y(25)=y(25)-1
+         y(33)=y(33)-1
+         y(26)=y(26)+1
+      else if (mu==84) then !reaction 84
+         y(25)=y(25)+1
+         y(33)=y(33)+1
+         y(26)=y(26)-1
+      else if (mu==85) then !reaction 85
+         y(29)=y(29)-1
+         y(33)=y(33)-1
+         y(30)=y(30)+1
+      else if (mu==86) then !reaction 86
+         y(29)=y(29)+1
+         y(33)=y(33)+1
+         y(30)=y(30)-1
+      else if (mu==87) then !reaction 87
+         y(24)=y(24)-1
+         y(45)=y(45)-1
+         y(26)=y(26)+1
+      else if (mu==88) then !reaction 88
+         y(24)=y(24)+1
+         y(45)=y(45)+1
+         y(26)=y(26)-1
+      else if (mu==89) then !reaction 89
+         y(28)=y(28)-1
+         y(45)=y(45)-1
+         y(30)=y(30)+1
+      else if (mu==90) then !reaction 90
+         y(28)=y(28)+1
+         y(45)=y(45)+1
+         y(30)=y(30)-1
+      else if (mu==91) then !reaction 91
+         y(31)=y(31)+1
+      else if (mu==92) then !reaction 92
+         y(31)=y(31)+1
+      else if (mu==93) then !reaction 93
+         y(31)=y(31)+1
+      else if (mu==94) then !reaction 94
+         y(31)=y(31)+1
+      else if (mu==95) then !reaction 95
+         y(31)=y(31)-1
+      else if (mu==96) then !reaction 96
+         y(32)=y(32)+1
+      else if (mu==97) then !reaction 97
+         y(32)=y(32)-1
+      else if (mu==98) then !reaction 98
+         y(32)=y(32)-2
+         y(33)=y(33)+1
+      else if (mu==99) then !reaction 99
+         y(32)=y(32)+2
+         y(33)=y(33)-1
       end if
 
    end do
@@ -810,4 +744,3 @@ write(1,*)'time',',','P_1',',','Pa2_1',',','Pa3_1',',','Pa23_1',',','Pr_1',',','
    write(4,*)t,',',time000,',',time001,',',time010,',',time011,',',time100,',',time101,',',time110,',',time111
 
 end program
-
