@@ -1,0 +1,6 @@
+Instructions to run the NOT (or AND) gate simulation:
+
+1) Download the pbits_OR_gate.f90 (or pbits_AND_gate.f90) file.
+2) Compile the file using a Fortran compiler, such as gfortran.
+3) Run the executable file created after compilation.
+4) Data files will be generated in the same folder where the executable is run.

@@ -19,9 +19,9 @@ program pbits_AND_gate
    open(3,file='time3.dat')
    open(4,file='bars_genes.dat')
 
-   n=33
-   m=99
-   v=1.d0
+   n=33 !number of molecular species
+   m=99 !number of reactions
+   v=1.d0 !volume
    allocate(a(1:m),h(1:m),c(1:m),y(1:n))
 
 !GENE1
@@ -214,6 +214,7 @@ program pbits_AND_gate
       c(73)=c(67)   !reaction 73: Pa12_3-->Pra12_3
    end if
 
+   !molecular species
    y(1)=1   !P_1
    y(2)=0   !Pa2_1
    y(3)=0   !Pa3_1
@@ -261,6 +262,7 @@ program pbits_AND_gate
             aux_write=t+incremento_t
          end if
 
+      !molecular reactant combinations
       h(1)=real(y(1),8)   !reaction 1
       h(2)=real(y(5),8)   !reaction 2
       h(3)=real(y(2),8)   !reaction 3
@@ -398,7 +400,7 @@ program pbits_AND_gate
 
       aux1=r2*a0
       aux2=0.0
-      mu=0
+      mu=0 !mu represents the chemical reaction that occurs in each iteration
       do i=1,m
          aux2=aux2+a(i)
          if (aux1<aux2) then 
